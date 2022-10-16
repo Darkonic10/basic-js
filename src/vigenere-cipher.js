@@ -21,7 +21,7 @@ const { NotImplementedError } = require('../extensions/index.js');
  */
 
 class VigenereCipheringMachine {
-  construct(isDirect) {
+  constructor(isDirect = true) {
     this.isDirect = isDirect
   }
   encrypt(message, key) {
@@ -31,9 +31,10 @@ class VigenereCipheringMachine {
     let upperMessage = message.toUpperCase()
     let upperKey = key.toUpperCase()
     let kf = Math.ceil(upperMessage.length / key.length)
-    key = upperKey.repeat(kf)
+    key = upperKey.repeat(kf).slice(0, upperMessage.length)
     let codeA = 'A'.charCodeAt(0)
     let alphabetCount = 26;
+    let zero = 0;
 
     const result = [];
 
@@ -42,14 +43,16 @@ class VigenereCipheringMachine {
         result.push(upperMessage[i])
       } else {
         let index = upperMessage.charCodeAt(i) - codeA;
-        let shift = key.charCodeAt(i) - codeA;
+        let shift = key.charCodeAt(zero) - codeA;
         result.push(String.fromCharCode(codeA + (index + shift) % alphabetCount));
+        zero++
       }
     }
-    if(this.isDirect === false) {
+    if(this.isDirect) {
+      return result.join('')
+    } else {
       return result.reverse().join('')
     }
-    return result.join('')
   }
   decrypt(message, key) {
     if(message === undefined || key === undefined) {
@@ -61,6 +64,7 @@ class VigenereCipheringMachine {
     key = upperKey.repeat(kf)
     let codeA = 'A'.charCodeAt(0)
     let alphabetCount = 26;
+    let zero = 0;
 
     const result = [];
 
@@ -69,15 +73,17 @@ class VigenereCipheringMachine {
         result.push(upperMessage[i])
       } else {
         let index = upperMessage.charCodeAt(i) - codeA;
-        let shift = key.charCodeAt(i) - codeA;
+        let shift = key.charCodeAt(zero) - codeA;
 
         result.push(String.fromCharCode(codeA + (index - shift + alphabetCount) % alphabetCount));
+        zero++
       }
     }
-    if(this.isDirect === false) {
+    if(this.isDirect) {
+      return result.join('')
+    } else {
       return result.reverse().join('')
     }
-    return result.join('')
   }
 }
 
