@@ -1,5 +1,3 @@
-const { NotImplementedError } = require('../extensions/index.js');
-
 /**
  * Given a string, return its encoding version.
  *
@@ -11,7 +9,6 @@ const { NotImplementedError } = require('../extensions/index.js');
  *
  */
 function encodeLine(str) {
-  console.log('str>', str)
   const result = [];
   let count = 1;
   for(let i = 0; i < str.length; i++) {
@@ -24,7 +21,6 @@ function encodeLine(str) {
       count = 1
     }
   }
-  console.log(result)
   return result.join('')
 }
 

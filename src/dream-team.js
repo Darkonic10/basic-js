@@ -1,5 +1,3 @@
-const { NotImplementedError } = require('../extensions/index.js');
-
 /**
  * Create name of dream team based on the names of its members
  *  
@@ -19,15 +17,12 @@ function createDreamTeam(members) {
   }
 
   let result = [];
-  console.log('members>', members)
   for (let i in members) {
-    console.log('members[i]>',members[i])
     if(typeof members[i] === 'string') {
       let name = members[i].replace(/\s/g,'')
       result.push(name[0].toUpperCase())
     }
   }
-  console.log('result>',result.sort().join(''))
   return result.sort().join('')
 }
 

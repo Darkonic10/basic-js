@@ -1,5 +1,3 @@
-const { NotImplementedError } = require('../extensions/index.js');
-
 /**
  * There's a list of file, since two files cannot have equal names,
  * the one which comes later will have a suffix (k),
@@ -16,9 +14,24 @@ const { NotImplementedError } = require('../extensions/index.js');
  *
  */
 function renameFiles(names) {
-  if(names[0] === 'doc') return ['doc', 'doc(1)', 'image', 'doc(1)(1)', 'doc(2)']
-  if(names[0] === 'a') return ['a', 'b', 'cd', 'b ', 'a(3)']
-  if(names.length === 0) return []
+  const counterMap = new Map();
+
+  return names.map((name) => {
+    if (counterMap.has(name)) {
+      let count = counterMap.get(name);
+      let newName = `${name}(${count})`;
+      while (counterMap.has(newName)) {
+        count += 1;
+        newName = `${name}(${count})`;
+      }
+      counterMap.set(name, count + 1);
+      counterMap.set(newName, 1);
+      return newName;
+    } else {
+      counterMap.set(name, 1);
+      return name;
+    }
+  });
 }
 
 module.exports = {

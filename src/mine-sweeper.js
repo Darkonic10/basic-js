@@ -1,5 +1,3 @@
-const { NotImplementedError } = require('../extensions/index.js');
-
 /**
  * In the popular Minesweeper game you have a board with some mines and those cells
  * that don't contain a mine have a number in it that indicates the total number of mines
@@ -24,12 +22,23 @@ const { NotImplementedError } = require('../extensions/index.js');
  * ]
  */
 function minesweeper(matrix) {
-  if(matrix.length === 3) {
-    return [[1, 2, 1], [2, 1, 1], [1, 1, 1],]
+  const result = new Array(matrix.length).fill(0).map((_) =>
+    new Array(matrix[0].length).fill(0)
+  );
+  for (let row = 0; row < matrix.length; row++) {
+    for (let col = 0; col < matrix[row].length; col++) {
+      const up = matrix?.[row - 1]?.[col] || false
+      const down = matrix?.[row + 1]?.[col] || false
+      const left = matrix?.[row]?.[col - 1] || false
+      const right = matrix?.[row]?.[col + 1] || false
+      const upLeft = matrix?.[row - 1]?.[col - 1] || false
+      const upRight = matrix?.[row - 1]?.[col + 1] || false
+      const downLeft = matrix?.[row + 1]?.[col - 1] || false
+      const downRight = matrix?.[row + 1]?.[col + 1] || false
+      result[row][col] = up + down + left + right + upLeft + upRight + downLeft + downRight
+    }
   }
-  if(matrix.length === 2) {
-    return [[0, 0, 0], [0, 0, 0]]
-  }
+  return result
 }
 
 module.exports = {

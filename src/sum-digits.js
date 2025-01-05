@@ -1,5 +1,3 @@
-const { NotImplementedError } = require('../extensions/index.js');
-
 /**
  * Given a number, replace this number with
  * the sum of its digits until we get to a one digit number.
@@ -13,11 +11,13 @@ const { NotImplementedError } = require('../extensions/index.js');
  *
  */
 function getSumOfDigits(n) {
-  if(n === 91) return 1;
-  if(n === 100) return 1;
-  if(n === 35) return 8;
-  if(n === 99) return 9;
-  if(n === 123) return 6;
+  while (n > 9) {
+    n = n
+      .toString()
+      .split('')
+      .reduce((sum, digit) => sum + +digit, 0);
+  }
+  return n
 }
 
 module.exports = {
